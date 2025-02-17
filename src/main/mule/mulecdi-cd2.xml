@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="10e037eb-e726-4990-9789-e64b0ce16496" >
+		<http:listener-connection host="0.0.0.0" port="8083" />
+	</http:listener-config>
+	<flow name="mulecdi-cd2Flow" doc:id="15f4e81b-035c-4b27-8753-5aa75ea6581d" >
+		<http:listener doc:name="Listener" doc:id="957a9f54-fe47-46b3-85fd-ea73d78460f7" config-ref="HTTP_Listener_config" path="/mulecdci"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2548f5ab-d72b-4543-bba7-90c2cbfb523a" message="flow start"/>
+		<ee:transform doc:name="Transform Message" doc:id="cbadd920-61c3-4e3a-8f55-7f1e768d92ec" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message":"accomplished perfectly"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a19a3ded-9184-4271-9f3f-423bd6602438" message="flow end"/>
+	</flow>
+</mule>
